@@ -47,6 +47,12 @@
     - 'systemctl disable iptables'
   failed_when: false
 
+- name: stop and distable firewall service
+  shell: '{{ item }}'
+  with_items:
+    - 'systemctl stop firewalld'
+    - 'systemctl disable firewalld'
+
 - name:  close selinux temporary
   shell: setenforce 0
   failed_when: false
