@@ -1,0 +1,9 @@
+---
+- hosts: zookeeper
+  vars_files:
+    - vars/var_zookeeper.yaml
+  vars:
+    start_zk: true
+  roles:
+    - java
+    - zookeeper

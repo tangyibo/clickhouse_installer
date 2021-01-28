@@ -1,0 +1,12 @@
+---
+
+- name: stop clickhouse service
+  shell: '{{ item }}'
+  with_items:
+    - 'systemctl stop clickhouse-server.service'
+    - 'systemctl disable clickhouse-server.service'
+  ignore_errors: true
+
+- name: erase clickhouse package
+  shell: yum list installed | grep clickhouse | awk '{print $1}' | xargs -I {} yum remove -y {}
+  ignore_errors: true

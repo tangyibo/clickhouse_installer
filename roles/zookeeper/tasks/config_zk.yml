@@ -1,0 +1,32 @@
+---
+
+- name: shutdown zkServer if exist
+  shell: |
+    if [ -f "{{zookeeper_install_dir}}/zookeeper/bin/zkServer.sh" ]; then \
+      {{zookeeper_install_dir}}/zookeeper/bin/zkServer.sh stop; \
+    fi
+  ignore_errors: true
+
+- name: copy and config zoo.cfg
+  template: src=zoo.cfg dest={{zookeeper_install_dir}}/zookeeper/conf mode=644
+
+- name: copy and config log4j
+  template: src=log4j.properties dest={{zookeeper_install_dir}}/zookeeper/conf mode=644
+
+- name: copy zkEnv Shell
+  template: src=zkEnv.sh dest={{zookeeper_install_dir}}/zookeeper/bin mode=755
+
+- name: copy zkServer Shell
+  template: src=zkServer.sh dest={{zookeeper_install_dir}}/zookeeper/bin mode=755
+
+- name: copy setId Shell
+  template: src=setId.sh dest={{zookeeper_install_dir}}/zookeeper/bin mode=755 
+
+- name: set Id
+  shell: 'source {{zookeeper_install_dir}}/zookeeper/bin/setId.sh'
+
+- name: Copy Zookeeper Env Script
+  template: src=zookeeper_env.sh dest=/etc/profile.d/ mode=755
+
+- name: Set Zookeeper Env
+  shell: source /etc/profile.d/zookeeper_env.sh

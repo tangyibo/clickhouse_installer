@@ -1,0 +1,45 @@
+<yandex>
+    <!--clickhouse节点相关配置-->
+    <clickhouse_remote_servers>
+        <perftest_3shards_1replicas>
+            {% for clickhouse_host in groups[clickhouse_hosts] %}
+            <shard>
+                <internal_replication>true</internal_replication>
+                <replica>
+                    <host>{{ clickhouse_host }}</host>
+                    <port>9000</port>
+                </replica>
+            </shard>
+            {% endfor %}
+        </perftest_3shards_1replicas>
+    </clickhouse_remote_servers>
+
+    <!--zookeeper节点相关配置-->
+    <zookeeper-servers>
+    {% for zkhost in groups[zk_hosts] %}
+            <node index="{{ loop.index}}">
+            <host>{{ zkhost }}</host>
+            <port>2181</port>
+        </node>
+    {% endfor %}
+    </zookeeper-servers>
+
+    <!-- 以下的配置根据节点的IP/域名具体配置 -->
+    <macros>
+        <replica>{{ inventory_hostname }}</replica>
+    </macros>
+
+    <!-- 以下的配置保持原样即可 -->
+    <networks>
+        <ip>::/0</ip>
+    </networks>
+
+    <clickhouse_compression>
+        <case>
+            <min_part_size>10000000000</min_part_size>
+            <min_part_size_ratio>0.01</min_part_size_ratio>
+            <method>lz4</method>
+        </case>
+    </clickhouse_compression>
+
+</yandex>

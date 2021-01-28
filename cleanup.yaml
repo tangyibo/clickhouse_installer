@@ -1,0 +1,6 @@
+- hosts: nodes
+  vars_files:
+    - vars/var_zookeeper.yaml
+    - vars/var_clickhouse.yaml
+  roles:
+    - cleanup

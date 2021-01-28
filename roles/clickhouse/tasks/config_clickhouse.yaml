@@ -1,0 +1,10 @@
+---
+
+- name: copy and config clickhouse users-xml
+  template: src=users.xml dest=/etc/clickhouse-server mode=644 owner=clickhouse group=clickhouse
+
+- name: copy and config clickhouse config-xml
+  template: src=config.xml dest=/etc/clickhouse-server mode=644 owner=clickhouse group=clickhouse
+
+- name: copy and config clickhouse metrika-xml
+  template: src=metrika.xml dest=/etc/clickhouse-server mode=644 owner=clickhouse group=clickhouse

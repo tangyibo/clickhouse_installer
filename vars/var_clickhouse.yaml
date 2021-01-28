@@ -1,0 +1,10 @@
+---
+# env path
+clickhouse_data_dir: "/data/clickhouse"
+clickhouse_tmp_data_dir: "/data/clickhouse/tmp"
+clickhouse_log_dir: "/var/log/clickhouse-server"
+
+
+# host group
+# the group define in hosts.ini
+clickhouse_hosts: clickhouse

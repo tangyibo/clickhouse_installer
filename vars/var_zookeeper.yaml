@@ -1,0 +1,20 @@
+---
+zookeeper_version: "3.5.9"     # zookeeper version
+zookeeper_download_url: "https://mirror.bit.edu.cn/apache/zookeeper/zookeeper-{{zookeeper_version}}/apache-zookeeper-{{zookeeper_version}}-bin.tar.gz"
+
+# env path
+zookeeper_install_dir: "/usr/local"
+zookeeper_data_dir: "{{zookeeper_install_dir}}/zookeeper/data"
+zookeeper_log_path: "{{zookeeper_install_dir}}/zookeeper/logs"
+zookeeper_tmp_path: "/tmp"
+
+# zookeeper port
+zk_leader_port: 2888
+zk_vote_port: 3888
+zk_client_port: 2181
+zk_jmx_port: 1911
+zk_random_port: "30001-65006"
+
+# host group
+# the group define in hosts.ini
+zk_hosts: zookeeper

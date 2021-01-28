@@ -1,0 +1,16 @@
+---
+
+- name: stop zookeeper server
+  shell: |
+    if [ -f "{{zookeeper_install_dir}}/zookeeper/bin/zkServer.sh" ]; then \
+      {{zookeeper_install_dir}}/zookeeper/bin/zkServer.sh stop; \
+    fi
+  ignore_errors: true
+
+- name: erase zookeeper package
+  file: 
+    path: '{{ item }}'
+    state: absent
+  with_items:
+    - '{{ zookeeper_install_dir }}/zookeeper'
+    - '{{ zookeeper_install_dir }}/apache-zookeeper-{{zookeeper_version}}-bin'

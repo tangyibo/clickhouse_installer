@@ -1,0 +1,90 @@
+---
+
+- name:  check whether centos 7 operator system
+  shell: |
+    v=$(cat /etc/redhat-release | sed -r 's/.* ([0-9]+)\..*/\1/'); \
+    if [ $v -ne 7 ]; then \
+        echo "[ERROR]: This system only can run for system CentOS 7 version."; \
+        exit 1; \
+    fi
+
+- name:  check whether x86_64 platform
+  shell: |
+    platform=$(uname -m); \
+    if [ "$platform" != "x86_64" ]; then \
+        echo "[ERROR]: This system only can run for x86_64 operation system."; \
+        exit 1; \
+    fi
+
+- name: check whether can connect internet
+  shell: |
+    ping -c 1 -w 1 www.baidu.com > /dev/null; \
+    if [ $? -ne 0 ]; then \
+        echo "[ERROR]: host can not connect internet world!"; \
+        exit 1; \
+    fi
+
+- name: add base yum repository
+  yum_repository:
+    name: base
+    description: Base Aliyun Repository
+    baseurl: http://mirrors.aliyun.com/centos/$releasever/centosplus/$basearch/
+    gpgcheck: yes
+    gpgkey: http://mirrors.aliyun.com/centos/RPM-GPG-KEY-CentOS-7
+
+- name: add epel yum repository
+  yum_repository:
+    name: epel
+    description: Epel Aliyun Repository
+    baseurl: http://mirrors.aliyun.com/epel/7/$basearch
+    gpgcheck: no
+
+- name: unmask firewall service
+  shell: '{{ item }}'
+  with_items:
+    - 'systemctl unmask firewalld'
+    - 'systemctl stop iptables'
+    - 'systemctl disable iptables'
+  failed_when: false
+
+- name:  close selinux temporary
+  shell: setenforce 0
+  failed_when: false
+
+- name: close selinux forever
+  lineinfile:
+    dest: /etc/selinux/config
+    regexp: '^SELINUX='
+    line: 'SELINUX=disabled'
+
+- name: make sure ntp is installed
+  yum: name=ntp state=installed
+  tags: ntp
+
+- name: configure sync time using aliyun server
+  cron: name="sync time" minute='*/5' hour=* day=* month=* weekday=* job="/usr/sbin/ntpdate -u ntp1.aliyun.com >/dev/null 2>&1"
+  ignore_errors: true
+
+- name: change host name to etc-hostname
+  raw: 'echo {{hostname|quote}} > /etc/hostname'
+
+- name: change host name by command hostname
+  shell: hostname {{hostname|quote}}
+    
+- name: update configure for etc-hosts
+  blockinfile:
+    path: /etc/hosts
+    block: |-
+      {% for item in (groups['nodes']|default([]))|unique -%}
+      {{ item }} {{ hostvars[item]['hostname'] }}
+      {% endfor %}
+    state: present
+    create: yes
+    backup: yes
+    unsafe_writes: yes
+    marker: "# Ansible inventory hosts {mark}"
+
+- name: install curl and wget
+  yum: 
+    name: ['curl', 'wget']
+    state: present

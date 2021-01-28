@@ -1,0 +1,9 @@
+---
+- hosts: clickhouse
+  vars_files:
+    - vars/var_zookeeper.yaml
+    - vars/var_clickhouse.yaml
+  vars:
+    start_clickhouse: true
+  roles:
+    - clickhouse

@@ -1,0 +1,11 @@
+---
+
+- name: Install Zookeeper
+  include: install_zk.yml
+
+- name: Config Zookeeper
+  include: config_zk.yml
+
+- name: Start Zookeeper
+  shell: "source /etc/profile.d/zookeeper_env.sh && cd {{zookeeper_install_dir}}/zookeeper && ./bin/zkServer.sh start"
+  when: start_zk

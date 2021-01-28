@@ -1,0 +1,11 @@
+---
+
+- name: Install Clickhouse
+  include: install_clickhouse.yaml
+
+- name: Config Clickhouse
+  include: config_clickhouse.yaml
+
+- name: Start Clickhouse
+  shell: systemctl restart clickhouse-server.service
+  when: start_clickhouse
