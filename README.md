@@ -152,13 +152,13 @@ Query id: 4cdcd3d4-855b-4774-8669-e873bd33bf73
 create database test on cluster cluster_3shards_1replicas
 ```
 
-## 2、删除分布式库
+### 2、删除分布式库
 
 ```
 drop database test on cluster cluster_3shards_1replicas
 ```
 
-## 3、创建分布式表
+### 3、创建分布式表
 
 ```
 user test;
@@ -181,7 +181,7 @@ SETTINGS index_granularity = 8192
 
 - 第二个参数{replica}指的是副本名称，{副本名}是直接引用配置文件中的你自己配置的副本名称信息;
 
-## 4、插入数据/查询数据/删除数据
+### 4、插入数据/查询数据/删除数据
 
 ```
 insert into t_user values('1','tang','X10086');
@@ -189,7 +189,7 @@ select * from t_user;
 alter table t_user delete where user_id = '1';
 ```
 
-## 5、批量导入CSV数据
+### 5、批量导入CSV数据
 
 先本地创建一个csv格式的文本文件：
 
@@ -206,13 +206,13 @@ EOF
 cat ./t_user.csv | clickhouse-client -h 127.0.0.1 --query="insert into test.t_user format CSV"
 ```
 
-## 6、查询结果数据导出
+### 6、查询结果数据导出
 
 ```
 clickhouse-client -h 127.0.0.1 -d 'test' -q 'select * from t_user format CSV' > ./new_t_user.csv
 ```
 
-## 7、查询表记录总数
+### 7、查询表记录总数
 
 ```
 select count(*) from t_user;
