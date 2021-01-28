@@ -26,7 +26,8 @@
 
     <!-- 以下的配置根据节点的IP/域名具体配置 -->
     <macros>
-        <replica>{{ inventory_hostname }}</replica>
+        <shard>shard-{{ inventory_hostname }}</shard>
+        <replica>replica-{{ inventory_hostname }}</replica>
     </macros>
 
     <!-- 以下的配置保持原样即可 -->
