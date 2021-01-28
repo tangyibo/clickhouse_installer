@@ -37,6 +37,7 @@ node3
 ### 1、安装
 
 ```
+git clone https://github.com/tangyibo/clickhouse_installer.git
 cd clickhouse_installer/
 sh install.sh
 ```
