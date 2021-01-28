@@ -2,6 +2,13 @@
 
 基于ansible快速安装ClickHouse相关组件
 
+**项目地址：**
+
+- Github: https://github.com/tangyibo/clickhouse_installer
+
+- Gitee: https://gitee.com/inrgihc/clickhouse_installer
+
+
 ## 一、安装准备
 
 - (1)  配置hosts.ini配置文件
