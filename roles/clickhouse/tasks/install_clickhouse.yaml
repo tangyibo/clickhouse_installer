@@ -16,3 +16,4 @@
   with_items:
     - "{{ clickhouse_data_dir }}"
     - "{{ clickhouse_tmp_data_dir }}"
+    - "{{ clickhouse_log_dir }}"

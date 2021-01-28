@@ -1,7 +1,7 @@
 <yandex>
     <!--clickhouse节点相关配置-->
     <clickhouse_remote_servers>
-        <perftest_3shards_1replicas>
+        <{{ clickhouse_cluster_name }}>
             {% for clickhouse_host in groups[clickhouse_hosts] %}
             <shard>
                 <internal_replication>true</internal_replication>
@@ -11,7 +11,7 @@
                 </replica>
             </shard>
             {% endfor %}
-        </perftest_3shards_1replicas>
+        </{{ clickhouse_cluster_name }}>
     </clickhouse_remote_servers>
 
     <!--zookeeper节点相关配置-->

@@ -3,7 +3,7 @@
 clickhouse_data_dir: "/data/clickhouse"
 clickhouse_tmp_data_dir: "/data/clickhouse/tmp"
 clickhouse_log_dir: "/var/log/clickhouse-server"
-
+clickhouse_cluster_name: "cluster_3shards_1replicas"
 
 # host group
 # the group define in hosts.ini
